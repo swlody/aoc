@@ -29,8 +29,8 @@ pub fn get_input(year: u16, day: u8) -> Result<String, Box<dyn Error>> {
         let start = Instant::now();
         let url = format!("{}/{}/day/{}/input", BASE_URL, year, day);
         let session_cookie = format!("session={}", get_conn_token()?);
-        let resp = attohttpc::get(&url)
-            .header(attohttpc::header::COOKIE, session_cookie)
+        let resp = minreq::get(&url)
+            .with_header("cookie", &session_cookie)
             .send()?;
         let elapsed = start.elapsed();
 
@@ -39,7 +39,7 @@ pub fn get_input(year: u16, day: u8) -> Result<String, Box<dyn Error>> {
             Line::new("downloaded input file").with_duration(elapsed)
         );
 
-        resp.text()
+        resp.as_str().map(|s| s.to_owned())
     })?;
 
     if result.ends_with('\n') {
