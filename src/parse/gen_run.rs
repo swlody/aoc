@@ -94,7 +94,7 @@ macro_rules! run_sol {
             "  - {}",
             Line::new(stringify!($solution))
                 .with_duration(elapsed)
-                .with_state(format!("{}", response).normal())
+                .with_state(format!("{:?}", response).normal())
         );
     }};
 
@@ -112,7 +112,7 @@ macro_rules! run_sol {
             "  - {}",
             match response.try_unwrap() {
                 Ok(response) => {
-                    line.with_state(format!("{}", response).normal())
+                    line.with_state(format!("{:?}", response).normal())
                 }
                 Err(msg) => {
                     line.with_state(msg.red())
