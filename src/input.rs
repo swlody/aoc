@@ -12,7 +12,12 @@ use crate::utils::Line;
 const BASE_URL: &str = "https://adventofcode.com";
 
 fn input_path(year: u16, day: u8) -> PathBuf {
-    format!("input/{}/day{}.txt", year, day).into()
+    if day < 10 {
+        format!("input/{}/day0{}.txt", year, day)
+    } else {
+        format!("input/{}/day{}.txt", year, day)
+    }
+    .into()
 }
 
 fn token_path() -> PathBuf {
